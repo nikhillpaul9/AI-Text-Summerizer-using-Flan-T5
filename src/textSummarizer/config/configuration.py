@@ -81,9 +81,14 @@ class ConfigurationManager:
             weight_decay = params.weight_decay,
             logging_steps = params.logging_steps,
             evaluation_strategy = params.evaluation_strategy,
-            eval_steps = params.evaluation_strategy,
+            eval_steps = params.eval_steps,
             save_steps = params.save_steps,
-            gradient_accumulation_steps = params.gradient_accumulation_steps
+            gradient_accumulation_steps = params.gradient_accumulation_steps,
+            gradient_checkpointing = params.gradient_checkpointing,
+            fp16 = params.fp16,
+            bf16 = params.bf16,
+            max_grad_norm = params.max_grad_norm,
+            use_cpu = params.use_cpu
         )
 
         return model_trainer_config

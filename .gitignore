@@ -219,3 +219,6 @@ __marimo__/
 
 #Steps File
 steps.txt
+
+# Model & checkpoints
+artifacts/model_trainer/
