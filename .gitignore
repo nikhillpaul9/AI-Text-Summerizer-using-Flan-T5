@@ -222,3 +222,6 @@ steps.txt
 
 # Model & checkpoints
 artifacts/model_trainer/
+
+# Raw Data Files
+artifacts/data_ingestion/

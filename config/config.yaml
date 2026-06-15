@@ -1,36 +1,37 @@
 artifacts_root: artifacts
 
-
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://github.com/entbappy/Branching-tutorial/raw/master/summarizer-data.zip
-  local_data_file: artifacts/data_ingestion/data.zip
-  unzip_dir: artifacts/data_ingestion
-
-
+  source_URL: ccdv/arxiv-summarization
+  local_data_file: artifacts/data_ingestion/data.arrow
+  unzip_dir: artifacts/data_ingestion/raw_dataset
+  # IMPORTANT: Use the 'document' config for this dataset
+  split_config: document
 
 data_validation:
   root_dir: artifacts/data_validation
+  unzip_data_dir: artifacts/data_ingestion/raw_dataset
   STATUS_FILE: artifacts/data_validation/status.txt
-  ALL_REQUIRED_FILES: ["train", "test", "validation"]
-
-
+  # Note: If your big_patent subset doesn't download a test split, remove "test" from this list.
+  ALL_REQUIRED_FILES: ["dataset_dict.json", "train", "validation", "test"]
 
 data_transformation:
   root_dir: artifacts/data_transformation
-  data_path: artifacts/data_ingestion/samsum_dataset
-  tokenizer_name: facebook/bart-large-cnn
-
+  data_path: artifacts/data_ingestion/raw_dataset
+  tokenizer_name: google/flan-t5-small
+  text_column: article
+  summary_column: abstract
 
 model_trainer:
   root_dir: artifacts/model_trainer
-  data_path: artifacts/data_transformation/samsum_dataset
-  model_ckpt: facebook/bart-large-cnn
-
+  data_path: artifacts/data_transformation/transformed_dataset
+  model_ckpt: google/flan-t5-small
 
 model_evaluation:
   root_dir: artifacts/model_evaluation
-  data_path: artifacts/data_transformation/samsum_dataset
-  model_path: artifacts/model_trainer/bart-samsum-model
+  data_path: artifacts/data_ingestion/raw_dataset
+  model_path: artifacts/model_trainer/fine_tuned_model
   tokenizer_path: artifacts/model_trainer/tokenizer
   metric_file_name: artifacts/model_evaluation/metrics.csv
+  text_column: article
+  summary_column: abstract

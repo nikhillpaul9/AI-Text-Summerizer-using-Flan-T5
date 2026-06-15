@@ -1,0 +1,77 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "document",
+  "dataset_name": "arxiv-summarization",
+  "dataset_size": 7550836224,
+  "description": "",
+  "download_size": 3614462676,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "List"
+    },
+    "labels": {
+      "feature": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "_type": "List"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 11165298900,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 7118099012,
+      "num_examples": 203037,
+      "shard_lengths": [
+        14536,
+        14536,
+        14536,
+        14536,
+        15536,
+        14536,
+        14536,
+        14536,
+        14536,
+        14536,
+        14536,
+        14536,
+        15070,
+        12535
+      ],
+      "dataset_name": "arxiv-summarization"
+    },
+    "validation": {
+      "name": "validation",
+      "num_bytes": 216177092,
+      "num_examples": 6436,
+      "dataset_name": "arxiv-summarization"
+    },
+    "test": {
+      "name": "test",
+      "num_bytes": 216560120,
+      "num_examples": 6440,
+      "dataset_name": "arxiv-summarization"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
