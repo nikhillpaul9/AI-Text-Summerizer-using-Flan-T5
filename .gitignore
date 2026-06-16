@@ -217,11 +217,18 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-#Steps File
-steps.txt
+#Steps Files
+Workflow_Steps.txt
+Deployment_Steps.txt
 
 # Model & checkpoints
 artifacts/model_trainer/
 
 # Raw Data Files
 artifacts/data_ingestion/
+
+# Access Key file
+text-summarization_accessKeys.csv
+
+# VM key file
+text-summarization-key.pem
