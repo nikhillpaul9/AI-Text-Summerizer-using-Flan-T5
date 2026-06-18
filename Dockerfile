@@ -5,11 +5,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install system-level dependencies required for compiling ML libraries
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    software-properties-common \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update -y && apt install awscli -y
 
 # Copy the requirements file and install Python dependencies
 # We do this before copying the rest of the code to leverage Docker layer caching
