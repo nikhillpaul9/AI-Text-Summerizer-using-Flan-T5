@@ -4,18 +4,15 @@ FROM python:3.11-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install system-level dependencies required for compiling ML libraries
-RUN apt update -y && apt install awscli -y
+# CRITICAL FIX: Added 'curl' for the healthcheck and 'build-essential' for ML C-compilers
+RUN apt update -y && apt install -y awscli curl build-essential && rm -rf /var/lib/apt/lists/*
 
 # COPY THE ENTIRE PROJECT FIRST
-# This ensures setup.py and all source files are present before pip runs
 COPY . .
 
-# Install all requirements (including the local -e . package)
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --upgrade accelerate
-RUN pip uninstall -y transformers accelerate
-RUN pip install transformers accelerate
+# Install requirements, then forcefully upgrade/reinstall transformers and accelerate in ONE layer
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir --upgrade --force-reinstall transformers accelerate
 
 # Expose Streamlit's default port
 EXPOSE 8501
