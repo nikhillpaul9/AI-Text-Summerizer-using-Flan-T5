@@ -9,7 +9,7 @@ RUN apt update -y && apt install awscli -y
 
 # COPY THE ENTIRE PROJECT FIRST
 # This ensures setup.py and all source files are present before pip runs
-COPY . .
+COPY . /app
 
 # Install all requirements (including the local -e . package)
 RUN pip install -r requirements.txt
