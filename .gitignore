@@ -224,6 +224,9 @@ Deployment_Steps.txt
 # Checkpoints
 **/checkpoint-*/
 
+# Model files
+artifacts/model_trainer/
+
 # Raw Data Files
 artifacts/data_ingestion/
 
