@@ -4,26 +4,18 @@ FROM python:3.11-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install system dependencies (awscli, curl, and compilation tools for ML libraries)
-RUN apt-get update -y && apt-get install -y \
-    awscli \
-    curl \
-    build-essential \
-    cmake \
-    pkg-config \
-    && rm -rf /var/lib/apt/lists/*
+# Install system-level dependencies required for compiling ML libraries
+RUN apt update -y && apt install awscli -y
 
-# COPY THE ENTIRE PROJECT FIRST to ensure setup.py is present
+# COPY THE ENTIRE PROJECT FIRST
+# This ensures setup.py and all source files are present before pip runs
 COPY . .
 
-# 1. Upgrade core Python build tools to prevent compilation errors
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-
-# 2. Install requirements safely
+# Install all requirements (including the local -e . package)
 RUN pip install --no-cache-dir -r requirements.txt
-
-# 3. Cleanly upgrade the specific ML libraries
-RUN pip install --no-cache-dir -U transformers accelerate
+RUN pip install --upgrade accelerate
+RUN pip uninstall -y transformers accelerate
+RUN pip install transformers accelerate
 
 # Expose Streamlit's default port
 EXPOSE 8501
