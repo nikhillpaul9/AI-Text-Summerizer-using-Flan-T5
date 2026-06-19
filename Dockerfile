@@ -9,10 +9,10 @@ RUN apt update -y && apt install awscli -y
 
 # COPY THE ENTIRE PROJECT FIRST
 # This ensures setup.py and all source files are present before pip runs
-COPY . /app
+COPY . .
 
 # Install all requirements (including the local -e . package)
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --upgrade accelerate
 RUN pip uninstall -y transformers accelerate
 RUN pip install transformers accelerate
