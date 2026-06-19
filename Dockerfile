@@ -4,15 +4,26 @@ FROM python:3.11-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# CRITICAL FIX: Added 'curl' for the healthcheck and 'build-essential' for ML C-compilers
-RUN apt update -y && apt install -y awscli curl build-essential && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (awscli, curl, and compilation tools for ML libraries)
+RUN apt-get update -y && apt-get install -y \
+    awscli \
+    curl \
+    build-essential \
+    cmake \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
 
-# COPY THE ENTIRE PROJECT FIRST
+# COPY THE ENTIRE PROJECT FIRST to ensure setup.py is present
 COPY . .
 
-# Install requirements, then forcefully upgrade/reinstall transformers and accelerate in ONE layer
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir --upgrade --force-reinstall transformers accelerate
+# 1. Upgrade core Python build tools to prevent compilation errors
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# 2. Install requirements safely
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 3. Cleanly upgrade the specific ML libraries
+RUN pip install --no-cache-dir -U transformers accelerate
 
 # Expose Streamlit's default port
 EXPOSE 8501
