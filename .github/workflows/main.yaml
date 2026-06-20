@@ -88,7 +88,7 @@ jobs:
          
       - name: Stop and remove container if running
         run: |
-          docker rm -f text-summarization || true
+         docker rm -f text-summarization || true
        
       - name: Run Docker Image to serve users
         run: |
